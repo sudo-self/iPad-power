@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>iPad Button Sequence</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 20px;
+      margin-bottom: 40px;
+      font-size: 28px;
+    }
+
+    .container {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .ipad-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ipad {
+      position: relative;
+      width: 300px;
+      height: 500px;
+      border: 12px solid #ccc;
+      border-radius: 40px;
+      background: #cfcfcf;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .button {
+      position: absolute;
+      width: 30px;
+      height: 10px;
+      background: #888;
+      border-radius: 5px;
+    }
+
+    .volume-up { top: 100px; left: -35px; }
+    .volume-down { top: 150px; left: -35px; }
+    .top-button { top: -15px; right: 40px; width: 10px; height: 30px; }
+    .home-button {
+      bottom: 10px;
+      width: 20px;
+      height: 20px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    .arrow {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .arrow.show {
+      opacity: 1;
+    }
+
+    .arrow.vol-up { top: 90px; left: -70px; }
+    .arrow.vol-down { top: 140px; left: -70px; }
+    .arrow.top-btn { top: -45px; right: 30px; transform: rotate(90deg); }
+    .arrow.home-btn { bottom: 40px; left: 135px; }
+
+    .apple-logo {
+      position: absolute;
+      width: 60px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .apple-logo.show {
+      opacity: 1;
+    }
+
+    .instruction {
+      font-size: 16px;
+      height: 24px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      text-align: center;
+      min-height: 30px;
+    }
+
+    .instruction.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+    <header style="text-align: center; margin-top: 20px;">
+      <img src="power.png" width="50px" height="auto" style="display: block; margin: 0 auto 10px;" alt="Power Icon" />
+      <h1>iPad won't turn on</h1>
+    </header>
+
+  <div class="container">
+    <!-- iPad No Home Button -->
+    <div class="ipad-group">
+      <h2>ipad</h2>
+      <div class="ipad" id="ipad-no-home">
+        <div class="button volume-up"></div>
+        <div class="button volume-down"></div>
+        <div class="button top-button"></div>
+
+        <div class="arrow vol-up">➡️</div>
+        <div class="arrow vol-down">➡️</div>
+        <div class="arrow top-btn">➡️</div>
+
+        <img class="apple-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo">
+      </div>
+      <div class="instruction" id="instruction-no-home"></div>
+    </div>
+
+    <!-- iPad With Home Button -->
+    <div class="ipad-group">
+      <h2>home button</h2>
+      <div class="ipad" id="ipad-home">
+        <div class="button top-button"></div>
+        <div class="button home-button"></div>
+
+        <div class="arrow top-btn">➡️</div>
+        <div class="arrow home-btn">⬇️</div>
+        <div class="arrow vol-down">➡️</div>
+
+        <img class="apple-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo">
+      </div>
+      <div class="instruction" id="instruction-home"></div>
+    </div>
+  </div>
+
+  <script>
+    function runNoHomeSequence() {
+      const instruction = document.getElementById("instruction-no-home");
+      const volUp = document.querySelector('#ipad-no-home .arrow.vol-up');
+      const volDown = document.querySelector('#ipad-no-home .arrow.vol-down');
+      const topBtn = document.querySelector('#ipad-no-home .arrow.top-btn');
+      const appleLogo = document.querySelector('#ipad-no-home .apple-logo');
+
+      volUp.classList.remove('show');
+      volDown.classList.remove('show');
+      topBtn.classList.remove('show');
+      instruction.classList.remove('show');
+      appleLogo.classList.remove('show');
+      instruction.textContent = "";
+
+      setTimeout(() => {
+        volUp.classList.add('show');
+        instruction.textContent = "Press and release Volume Up";
+        instruction.classList.add('show');
+      }, 0);
+      setTimeout(() => {
+        volUp.classList.remove('show');
+        instruction.classList.remove('show');
+      }, 1500);
+
+      setTimeout(() => {
+        volDown.classList.add('show');
+        instruction.textContent = "Press and release Volume Down";
+        instruction.classList.add('show');
+      }, 1600);
+      setTimeout(() => {
+        volDown.classList.remove('show');
+        instruction.classList.remove('show');
+      }, 3100);
+
+      setTimeout(() => {
+        topBtn.classList.add('show');
+        instruction.textContent = "Press and hold Top Button until Apple logo";
+        instruction.classList.add('show');
+      }, 3200);
+
+      setTimeout(() => {
+        appleLogo.classList.add('show');
+      }, 4000);
+    }
+
+    function runHomeSequence() {
+      const instruction = document.getElementById("instruction-home");
+      const topBtn = document.querySelector('#ipad-home .arrow.top-btn');
+      const homeBtn = document.querySelector('#ipad-home .arrow.home-btn');
+      const appleLogo = document.querySelector('#ipad-home .apple-logo');
+
+      topBtn.classList.remove('show');
+      homeBtn.classList.remove('show');
+      instruction.classList.remove('show');
+      appleLogo.classList.remove('show');
+      instruction.textContent = "";
+
+      setTimeout(() => {
+        topBtn.classList.add('show');
+        homeBtn.classList.add('show');
+        instruction.textContent = "Press and hold Top and Home buttons until Apple logo";
+        instruction.classList.add('show');
+      }, 0);
+
+      setTimeout(() => {
+        appleLogo.classList.add('show');
+      }, 3000);
+    }
+
+    runNoHomeSequence();
+    runHomeSequence();
+
+    setInterval(() => {
+      runNoHomeSequence();
+      runHomeSequence();
+    }, 7000);
+  </script>
+</body>
+</html>
+
+
